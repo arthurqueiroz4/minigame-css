@@ -3,7 +3,7 @@ using CounterStrikeSharp.API;
 using CounterStrikeSharp.API.Core;
 using CounterStrikeSharp.API.Modules.Cvars;
 
-namespace Forn.CSSharp;
+namespace Forn;
 
 public partial class FornPlugin
 {
@@ -72,5 +72,15 @@ public partial class FornPlugin
         }
 
         return true;
+    }
+    
+    static void RemoveBuyzones(CCSPlayerController? player)
+    {
+        if (player == null || !player.IsValid)
+        {
+            WriteColor($"FornPlugin - [*{player?.PlayerName ?? "Unknown"}*] is not valid or is disconnected.", ConsoleColor.Red);
+            return;
+        }
+        WriteColor("FornPlugin - Removing all buyzones.", ConsoleColor.Yellow);
     }
 }

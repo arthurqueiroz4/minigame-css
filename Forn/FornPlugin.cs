@@ -1,18 +1,15 @@
 ﻿using CounterStrikeSharp.API;
+using CounterStrikeSharp.API.Core;
 using CounterStrikeSharp.API.Core.Attributes.Registration;
 
-namespace Forn.CSSharp;
+namespace Forn;
 
-using CounterStrikeSharp.API.Core;
-
+//TODO - Add more modes: 500HP, Velocity 2.0x/0.5x, Jump, Only HS, Random gun
 public partial class FornPlugin : BasePlugin
 {
     public override string ModuleName => "FornPlugin";
 
     public override string ModuleVersion => "0.0.1";
-
-    // bool DebugMode = false;
-
 
     public override void Load(bool hotReload)
     {
@@ -37,7 +34,22 @@ public partial class FornPlugin : BasePlugin
     public HookResult OnRoundStart(EventRoundStart @event, GameEventInfo info)
     {
         WriteColor("FornPlugin - [*OnRoundStart*] event triggered.", ConsoleColor.Yellow);
-        OnlyP90Mode();
+        ChoiceMode();
+        return HookResult.Continue;
+    }
+
+    
+    //TODO When user spawns in middle of freezetime, give them the P250 weapon
+    [GameEventHandler]
+    public HookResult OnPlayerSpawn(EventPlayerSpawn @event, GameEventInfo info)
+    {
+        var player = @event.Userid;
+        if (player == null || !IsPlayerAlive(player))
+            return HookResult.Continue;
+        
+        var modeAction = Modes[Mode.OnlyP250];
+        modeAction([player]);
+        
         return HookResult.Continue;
     }
 }
