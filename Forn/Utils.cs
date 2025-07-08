@@ -7,13 +7,16 @@ namespace Forn;
 
 public partial class FornPlugin
 {
-    static void WriteColor(string message, ConsoleColor color)
+    private CCSGameRules GameRules =>
+        Utilities.FindAllEntitiesByDesignerName<CCSGameRulesProxy>("cs_gamerules").First().GameRules!;
+
+    private static void WriteColor(string message, ConsoleColor color)
     {
         var pieces = Regex.Split(message, @"(\[[^\]]*\])");
 
-        for (int i = 0; i < pieces.Length; i++)
+        for (var i = 0; i < pieces.Length; i++)
         {
-            string piece = pieces[i];
+            var piece = pieces[i];
 
             if (piece.StartsWith("[") && piece.EndsWith("]"))
             {
@@ -28,7 +31,7 @@ public partial class FornPlugin
         Console.WriteLine();
     }
 
-    static void RunCommand(string command, string value)
+    private static void RunCommand(string command, string value)
     {
         var cvarFound = ConVar.Find($"{command}");
         if (cvarFound == null)
@@ -41,13 +44,17 @@ public partial class FornPlugin
         Server.ExecuteCommand($"{command} {value}");
     }
 
-    static void DeniedBuying() => RunCommand("mp_buytime", "0");
+    private static void DeniedBuying()
+    {
+        RunCommand("mp_buytime", "0");
+    }
 
-    static bool IsPlayerAlive(CCSPlayerController? player) => player?.PawnIsAlive ?? false;
+    private static bool IsPlayerAlive(CCSPlayerController? player)
+    {
+        return player?.PawnIsAlive ?? false;
+    }
 
-    CCSGameRules GameRules => Utilities.FindAllEntitiesByDesignerName<CCSGameRulesProxy>("cs_gamerules").First().GameRules!;
-
-    static bool RemoveAllWeapons(CCSPlayerController? player)
+    private static bool RemoveAllWeapons(CCSPlayerController? player)
     {
         if (player == null || !player.IsValid || !player.PawnIsAlive)
         {
@@ -64,23 +71,21 @@ public partial class FornPlugin
         }
 
         foreach (var weapon in pawn.WeaponServices!.MyWeapons)
-        {
             if (weapon is { IsValid: true, Value.IsValid: true })
-            {
                 weapon.Value.Remove();
-            }
-        }
 
         return true;
     }
-    
-    static void RemoveBuyzones(CCSPlayerController? player)
+
+    private static void RemoveBuyzones(CCSPlayerController? player)
     {
         if (player == null || !player.IsValid)
         {
-            WriteColor($"FornPlugin - [*{player?.PlayerName ?? "Unknown"}*] is not valid or is disconnected.", ConsoleColor.Red);
+            WriteColor($"FornPlugin - [*{player?.PlayerName ?? "Unknown"}*] is not valid or is disconnected.",
+                ConsoleColor.Red);
             return;
         }
+
         WriteColor("FornPlugin - Removing all buyzones.", ConsoleColor.Yellow);
     }
 }

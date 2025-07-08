@@ -9,56 +9,55 @@ public enum Mode
     OnlyAwp,
     OnlyDeagle,
     OnlyP250,
+    SpeedVelocity,
+    SlowVelocity,
+    HighJump,
+    IncreasedHp
 }
 
 public partial class FornPlugin
 {
-    static string? CurrentLabel { get; set; }
-    static Mode CurrentMode { get; set; }
-
-    Dictionary<Mode, Action<List<CCSPlayerController>>> Modes { get; } = new()
+    private static string? CurrentLabel { get; set; }
+    private static Mode CurrentMode { get; set; }
+    private Dictionary<Mode, Action<List<CCSPlayerController>>> AllConstructorModes = new();
+    private Dictionary<Mode, Action<List<CCSPlayerController>>> DestructorModes { get; } = new()
     {
         {
-            Mode.OnlyP90, players =>
-            {
-                CurrentLabel = "Only P90 Mode";
-                CreateWeaponsOnlyMode([WeaponType.P90, WeaponType.Knife], players);
-            }
+            Mode.HighJump, _ => { TurnOffHighJumpMode(); }
         },
         {
-            Mode.OnlyAwp, players =>
-            {
-                CurrentLabel = "Only Awp Mode";
-                CreateWeaponsOnlyMode([WeaponType.Awp, WeaponType.Knife], players);
-            }
+            Mode.IncreasedHp, TurnOffIncreasedHpMode
         },
         {
-            Mode.OnlyDeagle, players =>
-            {
-                CurrentLabel = "Only Deagle Mode";
-                CreateWeaponsOnlyMode([WeaponType.Deagle, WeaponType.Knife], players);
-            }
+            Mode.SpeedVelocity, TurnOffVelocityMode
         },
         {
-            Mode.OnlyP250, players =>
-            {
-                CurrentLabel = "Only P250 Mode";
-                CreateWeaponsOnlyMode([WeaponType.P250, WeaponType.Knife], players);
-            }
+            Mode.SlowVelocity, TurnOffVelocityMode
         }
     };
 
-    void ChoiceMode()
+    private void TurnOnMode()
     {
         var players = Utilities.GetPlayers();
         if (players.Count == 0) return;
 
         var modes = Enum.GetValues<Mode>();
         var choice = modes[new Random().Next(modes.Length)];
-        Modes[choice].Invoke(players);
-        foreach (var player in players)
-        {
-            player.PrintToChat($"Current Mode: {CurrentLabel}");
-        }
+        CurrentMode = choice;
+
+        AllConstructorModes
+            .Concat(ConstructorWeaponModes)
+            .Concat(ConstructorStateModes)
+            .ToDictionary();
+        
+        AllConstructorModes[choice].Invoke(players);
+        Server.PrintToChatAll($"Current Mode: {CurrentLabel}");
+    }
+
+    private void TurnOffMode()
+    {
+        var players = Utilities.GetPlayers();
+        if (players.Count == 0) return;
+        DestructorModes[CurrentMode].Invoke(players);
     }
 }
