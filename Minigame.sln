@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Forn", "Forn\Forn.csproj", "{0FF7F0CC-F57C-4A38-AE46-90093E3AE8F9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Minigame", "Minigame\Minigame.csproj", "{0FF7F0CC-F57C-4A38-AE46-90093E3AE8F9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

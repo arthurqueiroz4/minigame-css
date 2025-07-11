@@ -5,7 +5,7 @@ using CounterStrikeSharp.API.Modules.Cvars;
 
 namespace Forn;
 
-public partial class FornPlugin
+public partial class Plugin
 {
     private CCSGameRules GameRules =>
         Utilities.FindAllEntitiesByDesignerName<CCSGameRulesProxy>("cs_gamerules").First().GameRules!;
