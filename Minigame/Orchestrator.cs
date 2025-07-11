@@ -53,6 +53,14 @@ public static class Orchestrator
         Minigames.ForEach(MinigamesReadyToPlay.Enqueue);
     }
 
+    public static void Setup(BasePlugin plugin, IMinigame minigameToTest)
+    {
+        _cooldownThreshold = 0;
+        MinigamesReadyToPlay.Enqueue(minigameToTest);
+        plugin.RegisterEventHandler<EventRoundStart>(OnRoundStart);
+        plugin.RegisterEventHandler<EventRoundEnd>(OnRoundEnd);
+    }
+
     private static HookResult OnRoundStart(EventRoundStart @event, GameEventInfo info)
     {
         if (_currentMinigame != null) return HookResult.Continue;
