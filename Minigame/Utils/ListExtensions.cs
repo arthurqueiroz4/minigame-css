@@ -1,4 +1,4 @@
-namespace Forn.Utils;
+namespace Minigame.Utils;
 
 public static class ListUtils
 {

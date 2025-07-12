@@ -1,6 +1,6 @@
 using CounterStrikeSharp.API;
 using CounterStrikeSharp.API.Core;
-using Forn.Utils;
+using Minigame.Utils;
 
 
 namespace Minigame;
@@ -11,8 +11,6 @@ public static class Orchestrator
     private static readonly Queue<IMinigame> MinigamesInCooldown = new();
     private static readonly Queue<IMinigame> MinigamesReadyToPlay = new();
     private static int _cooldownThreshold;
-    private static CCSGameRules GameRules =>
-        Utilities.FindAllEntitiesByDesignerName<CCSGameRulesProxy>("cs_gamerules").First().GameRules!;
 
     public static void Setup(BasePlugin plugin)
     {
@@ -47,6 +45,7 @@ public static class Orchestrator
     {
         _cooldownThreshold = 0;
         MinigamesReadyToPlay.Enqueue(minigameToTest);
+        _currentMinigame = minigameToTest;
         plugin.RegisterEventHandler<EventRoundStart>(OnRoundStart);
         plugin.RegisterEventHandler<EventRoundEnd>(OnRoundEnd);
     }
@@ -86,7 +85,7 @@ public static class Orchestrator
         
         var players = Utilities.GetPlayers();
         foreach (var player in players)
-            if (GameRules.FreezePeriod)
+            if (Helper.GameRules.FreezePeriod)
                 player.PrintToCenterHtml(
                     $"<font color='#888888'>────</font> " +
                     $"<font color='#32CD32' class='fontSize-l'><b>Minigame</b></font> " +

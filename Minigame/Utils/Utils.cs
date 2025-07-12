@@ -3,14 +3,14 @@ using CounterStrikeSharp.API;
 using CounterStrikeSharp.API.Core;
 using CounterStrikeSharp.API.Modules.Cvars;
 
-namespace Forn;
+namespace Minigame.Utils;
 
-public partial class Plugin
+public static class Helper
 {
-    private CCSGameRules GameRules =>
+    public static CCSGameRules GameRules =>
         Utilities.FindAllEntitiesByDesignerName<CCSGameRulesProxy>("cs_gamerules").First().GameRules!;
 
-    private static void WriteColor(string message, ConsoleColor color)
+    public static void WriteColor(string message, ConsoleColor color)
     {
         var pieces = Regex.Split(message, @"(\[[^\]]*\])");
 
@@ -31,7 +31,7 @@ public partial class Plugin
         Console.WriteLine();
     }
 
-    private static void RunCommand(string command, string value)
+    public static void RunCommand(string command, string value)
     {
         var cvarFound = ConVar.Find($"{command}");
         if (cvarFound == null)
@@ -44,17 +44,17 @@ public partial class Plugin
         Server.ExecuteCommand($"{command} {value}");
     }
 
-    private static void DeniedBuying()
+    public static void DeniedBuying()
     {
         RunCommand("mp_buytime", "0");
     }
 
-    private static bool IsPlayerAlive(CCSPlayerController? player)
+    public static bool IsPlayerAlive(CCSPlayerController? player)
     {
         return player?.PawnIsAlive ?? false;
     }
 
-    private static bool RemoveAllWeapons(CCSPlayerController? player)
+    public static bool RemoveAllWeapons(CCSPlayerController? player)
     {
         if (player == null || !player.IsValid || !player.PawnIsAlive)
         {
@@ -77,7 +77,7 @@ public partial class Plugin
         return true;
     }
 
-    private static void RemoveBuyzones(CCSPlayerController? player)
+    public static void RemoveBuyzones(CCSPlayerController? player)
     {
         if (player == null || !player.IsValid)
         {
