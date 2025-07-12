@@ -54,29 +54,6 @@ public static class Helper
         return player?.PawnIsAlive ?? false;
     }
 
-    public static bool RemoveAllWeapons(CCSPlayerController? player)
-    {
-        if (player == null || !player.IsValid || !player.PawnIsAlive)
-        {
-            WriteColor($"FornPlugin - [*{player?.PlayerName ?? "Unknown"}*] is not valid or is disconnected.",
-                ConsoleColor.Red);
-            return false;
-        }
-
-        var pawn = player.Pawn.Value;
-        if (pawn == null)
-        {
-            WriteColor($"FornPlugin - [*{player.PlayerName}*] pawn is null.", ConsoleColor.Red);
-            return false;
-        }
-
-        foreach (var weapon in pawn.WeaponServices!.MyWeapons)
-            if (weapon is { IsValid: true, Value.IsValid: true })
-                weapon.Value.Remove();
-
-        return true;
-    }
-
     public static void RemoveBuyzones(CCSPlayerController? player)
     {
         if (player == null || !player.IsValid)
