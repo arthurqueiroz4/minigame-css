@@ -3,12 +3,12 @@ using CounterStrikeSharp.API.Core;
 
 namespace Minigame.Minigames;
 
-public class SwitchOnKill : IMinigame
+public class SwitchOnKillMinigame : IMinigame
 {
     public BasePlugin Plugin { get; }
     public string Name { get; } = "Switch On Kill";
 
-    public SwitchOnKill(BasePlugin plugin)
+    public SwitchOnKillMinigame(BasePlugin plugin)
     {
         Plugin = plugin;
     }

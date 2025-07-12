@@ -11,7 +11,7 @@ public class IncreasedHpMinigame : IMinigame
     }
 
     public BasePlugin Plugin { get; }
-    public string Name => "Increased HP Minigame";
+    public string Name => "Increased HP";
 
     public void Register(List<CCSPlayerController>? players = null)
     {

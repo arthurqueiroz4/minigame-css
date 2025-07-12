@@ -2,6 +2,7 @@ using CounterStrikeSharp.API;
 using CounterStrikeSharp.API.Core;
 using Forn.Utils;
 
+
 namespace Minigame;
 public static class Orchestrator
 {
@@ -10,6 +11,8 @@ public static class Orchestrator
     private static readonly Queue<IMinigame> MinigamesInCooldown = new();
     private static readonly Queue<IMinigame> MinigamesReadyToPlay = new();
     private static int _cooldownThreshold;
+    private static CCSGameRules GameRules =>
+        Utilities.FindAllEntitiesByDesignerName<CCSGameRulesProxy>("cs_gamerules").First().GameRules!;
 
     public static void Setup(BasePlugin plugin)
     {
@@ -17,6 +20,7 @@ public static class Orchestrator
         _cooldownThreshold = (int)(Minigames.Count * 0.5);
         plugin.RegisterEventHandler<EventRoundStart>(OnRoundStart);
         plugin.RegisterEventHandler<EventRoundEnd>(OnRoundEnd);
+        plugin.RegisterListener<Listeners.OnTick>(OnTick);
     }
 
     private static void InstanceMinigames(BasePlugin plugin)
@@ -73,5 +77,22 @@ public static class Orchestrator
         }
 
         return HookResult.Continue;
+    }
+
+    private static void OnTick()
+    {
+        if (_currentMinigame == null)
+            return;
+        
+        var players = Utilities.GetPlayers();
+        foreach (var player in players)
+            if (GameRules.FreezePeriod)
+                player.PrintToCenterHtml(
+                    $"<font color='#888888'>────</font> " +
+                    $"<font color='#32CD32' class='fontSize-l'><b>Minigame</b></font> " +
+                    $"<font color='#888888'>────</font><br>" +
+                    $"<font color='#CCCCCC'>Now Playing:</font> " +
+                    $"<font color='#00FFFF' class='fontSize-m'><b>{_currentMinigame.Name}</b></font>"
+                );
     }
 }

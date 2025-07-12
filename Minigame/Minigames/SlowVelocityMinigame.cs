@@ -11,7 +11,7 @@ public class SlowVelocityMinigame : IMinigame
     }
 
     public BasePlugin Plugin { get; }
-    public string Name => "Slow Velocity Minigame";
+    public string Name => "Slow Velocity";
 
     public void Register(List<CCSPlayerController>? players = null)
     {

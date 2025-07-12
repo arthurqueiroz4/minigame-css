@@ -11,7 +11,7 @@ public class HighJumpMinigame : IMinigame
     }
 
     public BasePlugin Plugin { get; }
-    public string Name => "High Jump Minigame";
+    public string Name => "High Jump";
 
     public void Register(List<CCSPlayerController>? players = null)
     {

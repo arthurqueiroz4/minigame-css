@@ -11,7 +11,7 @@ public class NoGravityMinigame : IMinigame
     }
 
     public BasePlugin Plugin { get; }
-    public string Name => "No Gravity Minigame";
+    public string Name => "No Gravity";
 
     public void Register(List<CCSPlayerController>? players = null)
     {
