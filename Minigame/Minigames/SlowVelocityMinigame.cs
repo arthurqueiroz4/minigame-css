@@ -27,7 +27,6 @@ public class SlowVelocityMinigame : IMinigame
         }
         
         Server.ExecuteCommand("sv_maxspeed 100");
-        Server.PrintToChatAll(" \x04[Slow Velocity Mode]\x01 Players move at reduced speed!");
     }
 
     public void Unregister()
@@ -43,6 +42,5 @@ public class SlowVelocityMinigame : IMinigame
         
         // Restore normal max speed
         Server.ExecuteCommand("sv_maxspeed 320");
-        Server.PrintToChatAll(" \x04[Slow Velocity Mode]\x01 Speed restored to normal!");
     }
 } 
