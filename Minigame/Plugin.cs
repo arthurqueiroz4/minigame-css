@@ -8,8 +8,9 @@ using CS2TraceRay.Class;
 using CS2TraceRay.Enum;
 using CS2TraceRay.Struct;
 using Vector = CounterStrikeSharp.API.Modules.Utils.Vector;
+using Minigame.Minigames;
 
-namespace Forn;
+namespace Minigame;
 
 //TODO - Add more modes: 500HP, Velocity 2.0x/0.5x, Jump, Only HS, Random gun, DECOY 1 DE HP
 public partial class Plugin : BasePlugin

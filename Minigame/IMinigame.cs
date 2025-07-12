@@ -1,6 +1,6 @@
 using CounterStrikeSharp.API.Core;
 
-namespace Forn;
+namespace Minigame;
 
 public interface IMinigame
 {

@@ -2,21 +2,7 @@ using CounterStrikeSharp.API;
 using CounterStrikeSharp.API.Core;
 using Forn.Utils;
 
-namespace Forn;
-
-public enum Mode
-{
-    OnlyP90,
-    OnlyAwp,
-    OnlyDeagle,
-    OnlyP250,
-    SpeedVelocity,
-    SlowVelocity,
-    HighJump,
-    IncreasedHp,
-    TeleportOnReload,
-}
-
+namespace Minigame;
 public static class Orchestrator
 {
     private static readonly List<IMinigame> Minigames = new();

@@ -1,7 +1,7 @@
 using CounterStrikeSharp.API;
 using CounterStrikeSharp.API.Core;
 
-namespace Forn.Minigame;
+namespace Minigame.Minigames;
 
 public class SlowVelocityMinigame : IMinigame
 {
