@@ -5,7 +5,7 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <OutDir>/home/arthur/servers/cs-server-from-golang/game/csgo/addons/counterstrikesharp/plugins/Minigame</OutDir>
-        <RootNamespace>Forn</RootNamespace>
+        <RootNamespace>Minigame</RootNamespace>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     </PropertyGroup>
 
