@@ -8,7 +8,7 @@ public static class WeaponUtils
     public static void RemoveAllWeapons(CCSPlayerController player)
     {
         if (player.PlayerPawn.Value?.WeaponServices?.MyWeapons == null) return;
-        
+
         foreach (var weapon in player.PlayerPawn.Value.WeaponServices.MyWeapons)
         {
             if (weapon.IsValid && weapon.Value != null)
@@ -21,7 +21,7 @@ public static class WeaponUtils
     public static void RemoveSpecificWeapon(CCSPlayerController player, string weaponName)
     {
         if (player.PlayerPawn.Value?.WeaponServices?.MyWeapons == null) return;
-        
+
         foreach (var weapon in player.PlayerPawn.Value.WeaponServices.MyWeapons)
         {
             if (weapon.IsValid && weapon.Value != null && weapon.Value.DesignerName == weaponName)
@@ -43,4 +43,4 @@ public static class WeaponUtils
             }
         }
     }
-} 
+}

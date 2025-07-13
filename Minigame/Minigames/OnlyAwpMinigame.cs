@@ -1,37 +1,17 @@
-using CounterStrikeSharp.API;
 using CounterStrikeSharp.API.Core;
-using Minigame.Utils;
 
 namespace Minigame.Minigames;
 
-public class OnlyAwpMinigame : IMinigame
+public class OnlyAwpMinigame : BaseWeaponMinigame, IMinigame
 {
+    private readonly BasePlugin _plugin;
+
     public OnlyAwpMinigame(BasePlugin plugin)
     {
-        Plugin = plugin;
+        _plugin = plugin;
     }
 
-    public BasePlugin Plugin { get; }
+    public override BasePlugin Plugin => _plugin;
+    protected override string WeaponName => "weapon_awp";
     public string Name => "Only AWP";
-
-    public void Register(List<CCSPlayerController>? players = null)
-    {
-        var targetPlayers = players ?? Utilities.GetPlayers();
-        
-        foreach (var player in targetPlayers)
-        {
-            if (player.PlayerPawn.Value != null && player.PawnIsAlive)
-            {
-                WeaponUtils.RemoveAllWeapons(player);
-                player.GiveNamedItem("weapon_awp");
-                player.GiveNamedItem("weapon_knife");
-            }
-        }
-        
-    }
-
-    public void Unregister()
-    {
-        WeaponUtils.RemoveWeaponFromAllPlayers("weapon_awp");
-    }
-} 
+}
