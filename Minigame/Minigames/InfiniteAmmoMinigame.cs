@@ -1,6 +1,4 @@
-using CounterStrikeSharp.API;
 using CounterStrikeSharp.API.Core;
-using Minigame.Utils;
 
 namespace Minigame.Minigames;
 

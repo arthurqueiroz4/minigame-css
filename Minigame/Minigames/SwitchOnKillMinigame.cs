@@ -1,4 +1,3 @@
-using CounterStrikeSharp.API;
 using CounterStrikeSharp.API.Core;
 
 namespace Minigame.Minigames;
@@ -26,7 +25,7 @@ public class SwitchOnKillMinigame : IMinigame
     private HookResult OnPlayerDeath(EventPlayerDeath @event, GameEventInfo info)
     {
         var player = @event.Userid;
-        
+
         var killedPawn = @event.Userid?.PlayerPawn;
         var killerPawn = @event.Attacker?.PlayerPawn;
 
@@ -34,8 +33,8 @@ public class SwitchOnKillMinigame : IMinigame
         {
             return HookResult.Continue;
         }
-        Plugin.AddTimer(0.1f, () => killerPawn.Value!.Teleport(killedPawn.Value!.AbsOrigin) );
-       
+        Plugin.AddTimer(0.1f, () => killerPawn.Value!.Teleport(killedPawn.Value!.AbsOrigin));
+
         return HookResult.Continue;
     }
-} 
+}
