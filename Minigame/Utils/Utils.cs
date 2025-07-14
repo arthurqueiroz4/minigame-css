@@ -35,12 +35,7 @@ public static class Helper
     {
         var cvarFound = ConVar.Find($"{command}");
         if (cvarFound == null)
-        {
-            WriteColor($"FornPlugin - Command [*{command}*] not found.", ConsoleColor.Red);
             return;
-        }
-
-        WriteColor("FornPlugin - Running command: [*" + command + "*] with value: " + value, ConsoleColor.Yellow);
         Server.ExecuteCommand($"{command} {value}");
     }
 

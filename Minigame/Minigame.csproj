@@ -11,12 +11,11 @@
 
     <ItemGroup>
         <PackageReference Include="CounterStrikeSharp.API" Version="1.0.318" />
-        <PackageReference Include="CS2TraceRay" Version="1.0.4" />
     </ItemGroup>
 
     <ItemGroup>
         <Reference Include="CounterStrikeSharp.API">
-            <HintPath>/home/arthur/cs-server/cs2-ds/game/csgo/addons/counterstrikesharp/api/CounterStrikeSharp.API.dll</HintPath>
+            <HintPath>/home/arthur/servers/cs-server-from-golang/game/csgo/addons/counterstrikesharp/api/CounterStrikeSharp.API.dll</HintPath>
         </Reference>
     </ItemGroup>
 
