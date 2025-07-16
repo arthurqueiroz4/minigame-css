@@ -12,6 +12,6 @@ public partial class Plugin : BasePlugin
 
     public override void Load(bool hotReload)
     {
-        Orchestrator.Setup(this, new OnlyGrenadeHEMinigame(this));
+        Orchestrator.Setup(this, new OnlyDecoilWith1HPMinigame(this));
     }
 }

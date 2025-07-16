@@ -4,35 +4,40 @@ using Minigame.Utils;
 
 namespace Minigame.Minigames;
 
-public class OnlyGrenadeHEMinigame : IMinigame
+public class OnlyDecoilWith1HPMinigame(BasePlugin plugin) : IMinigame
 {
-    public BasePlugin Plugin { get; }
-    public string Name => "Infinite HE Only";
+    public BasePlugin Plugin => plugin;
 
-    public OnlyGrenadeHEMinigame(BasePlugin plugin)
-    {
-        Plugin = plugin;
-    }
+    public string Name => "Only Decoil With 1 HP";
 
     public void Register(List<CCSPlayerController>? players = null)
     {
-        Plugin.RegisterEventHandler(WeaponFireHandler, HookMode.Post);
-        GiveLoadout(players);
+        Plugin.RegisterEventHandler(GrenadeThrownHandler, HookMode.Post);
+
+        var targetPlayers = players ?? Utilities.GetPlayers();
+        foreach (var player in targetPlayers)
+        {
+            if (player.PlayerPawn.Value != null && player.PawnIsAlive)
+            {
+                player.PlayerPawn.Value.Health = 500;
+            }
+        }
+        GiveLoadout(targetPlayers);
     }
 
     public void Unregister()
     {
-        Plugin.DeregisterEventHandler(WeaponFireHandler, HookMode.Post);
+        Plugin.DeregisterEventHandler(GrenadeThrownHandler, HookMode.Post);
     }
 
-    private BasePlugin.GameEventHandler<EventGrenadeThrown> WeaponFireHandler =>
+    private BasePlugin.GameEventHandler<EventGrenadeThrown> GrenadeThrownHandler =>
         (@event, info) =>
         {
             var player = @event.Userid;
             if (player == null || player.PlayerPawn.Value == null)
                 return HookResult.Continue;
 
-            player.GiveNamedItem("weapon_hegrenade");
+            player.GiveNamedItem("weapon_decoy");
             return HookResult.Continue;
         };
 
@@ -44,7 +49,7 @@ public class OnlyGrenadeHEMinigame : IMinigame
             if (player.PlayerPawn.Value != null && player.PawnIsAlive)
             {
                 WeaponUtils.RemoveAllWeapons(player);
-                player.GiveNamedItem("weapon_hegrenade");
+                player.GiveNamedItem("weapon_decoy");
                 player.GiveNamedItem("weapon_knife");
             }
         }
