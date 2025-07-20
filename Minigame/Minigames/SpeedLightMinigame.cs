@@ -3,7 +3,7 @@ using Minigame.Utils;
 
 namespace Minigame.Minigames;
 
-public class SpeedLightMinigame : IMinigame
+public class SpeedLightMinigame// : IMinigame
 {
     public SpeedLightMinigame(BasePlugin plugin)
     {

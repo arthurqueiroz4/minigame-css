@@ -1,6 +1,5 @@
 ﻿using CounterStrikeSharp.API.Core;
 using Minigame;
-using Minigame.Minigames;
 
 namespace Forn;
 
@@ -12,6 +11,6 @@ public partial class Plugin : BasePlugin
 
     public override void Load(bool hotReload)
     {
-        Orchestrator.Setup(this, new OnlyDecoilWith1HPMinigame(this));
+        Orchestrator.Setup(this);
     }
 }

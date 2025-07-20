@@ -19,7 +19,7 @@ public class OnlyDecoilWith1HPMinigame(BasePlugin plugin) : IMinigame
         {
             if (player.PlayerPawn.Value != null && player.PawnIsAlive)
             {
-                player.PlayerPawn.Value.Health = 500;
+                player.PlayerPawn.Value.Health = 1;
             }
         }
         GiveLoadout(targetPlayers);

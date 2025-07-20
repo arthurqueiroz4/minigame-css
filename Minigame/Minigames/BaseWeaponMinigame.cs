@@ -25,6 +25,7 @@ public abstract class BaseWeaponMinigame
 
     public virtual void Unregister()
     {
+        Plugin.DeregisterEventHandler<EventItemPurchase>(OnEventItemPurchase);
         WeaponUtils.RemoveWeaponFromAllPlayers(WeaponName);
     }
 
