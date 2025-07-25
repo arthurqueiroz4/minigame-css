@@ -12,9 +12,6 @@ public class DamageOnFireMinigame : IMinigame
     public BasePlugin Plugin { get; }
     public string Name => "Damage On Fire";
 
-    //TODO: 
-    //Capturar o evento de tiro;
-    //Calcular a quantidade de balas que a arma possui e calcular o dano baseado na quantidade de balas;
     public void Register(List<CCSPlayerController>? players = null)
     {
         Plugin.RegisterEventHandler(WeaponFireHandler);
@@ -37,18 +34,56 @@ public class DamageOnFireMinigame : IMinigame
             if (weapon == null)
                 return HookResult.Continue;
 
-            // var clipAmmo = weapon.Clip1;
-            // var reserveAmmo = weapon.ReserveAmmo[0];
-            // int maxClip = reserveAmmo + clipAmmo;
-            // int bulletsUsed = maxClip - clipAmmo;
-            //
-            // double percentUsed = (double)bulletsUsed / reserveAmmo;
-            // int damage = (int)Math.Round(percentUsed * 30);
-            // pawn.Health = pawn.Health - damage < 0 ? 1 : pawn.Health - damage;
-            //
-            pawn.Health -= 5;
+            var clipAmmo = weapon.Clip1;
+            var designerName = weapon.DesignerName;
+            var maxClipDict = new Dictionary<string, int>
+            {
+                { "weapon_glock", 20 },
+                { "weapon_usp_silencer", 12 },
+                { "weapon_p250", 13 },
+                { "weapon_deagle", 7 },
+                { "weapon_fiveseven", 20 },
+                { "weapon_elite", 30 },
+                { "weapon_tec9", 18 },
+                { "weapon_cz75a", 12 },
+                { "weapon_revolver", 8 },
+                { "weapon_hkp2000", 13 },
+                { "weapon_p228", 13 },
+                { "weapon_mac10", 30 },
+                { "weapon_mp9", 30 },
+                { "weapon_mp7", 30 },
+                { "weapon_mp5sd", 30 },
+                { "weapon_ump45", 25 },
+                { "weapon_p90", 50 },
+                { "weapon_bizon", 64 },
+                { "weapon_galilar", 35 },
+                { "weapon_famas", 25 },
+                { "weapon_m4a1", 30 },
+                { "weapon_m4a1_silencer", 20 },
+                { "weapon_ak47", 30 },
+                { "weapon_sg556", 30 },
+                { "weapon_aug", 30 },
+                { "weapon_ssg08", 10 },
+                { "weapon_awp", 5 },
+                { "weapon_g3sg1", 20 },
+                { "weapon_scar20", 20 },
+                { "weapon_nova", 8 },
+                { "weapon_xm1014", 7 },
+                { "weapon_mag7", 5 },
+                { "weapon_sawedoff", 7 },
+                { "weapon_m249", 100 },
+                { "weapon_negev", 150 }
+            };
+            int maxClip = maxClipDict.TryGetValue(designerName, out var val) ? val : 30;
+            
+            double percentUsed = 1.0 - ((double)clipAmmo / maxClip);
+            int damage = (int)Math.Round(percentUsed * 30);
+            if (damage > 0)
+            {
+                pawn.Health = pawn.Health - damage < 1 ? 1 : pawn.Health - damage;
+                Server.NextFrame(() => Utilities.SetStateChanged(pawn, "CBaseEntity", "m_iHealth"));
+            }
 
-            Server.PrintToChatAll($"Health {pawn.Health} ");
             return HookResult.Continue;
         };
 }
