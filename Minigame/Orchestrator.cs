@@ -31,7 +31,6 @@ public static class Orchestrator
         {
             if (Activator.CreateInstance(minigameType, plugin) is IMinigame minigame)
             {
-                Console.WriteLine($"Instance of minigame: {minigame.Name}");
                 Minigames.Add(minigame);
             }
         }

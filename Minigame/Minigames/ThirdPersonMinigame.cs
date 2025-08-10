@@ -34,7 +34,7 @@ public class ThirdPersonMinigame : IMinigame
             CDynamicProp? camera = Utilities.CreateEntityByName<CDynamicProp>("prop_dynamic");
             if (camera == null) continue;
             camera.DispatchSpawn();
-            var pos = ThirdPersonUtils.CalculatePositionInFront(player, -110, 90); // Usa utilitário interno
+            var pos = ThirdPersonUtils.CalculatePositionInFront(player, -110, 90); 
             camera.Teleport(pos, player.PlayerPawn.Value!.V_angle, new Vector(0,0,0));
             player.PlayerPawn.Value!.CameraServices!.ViewEntity.Raw = camera.EntityHandle.Raw;
             Utilities.SetStateChanged(player.PlayerPawn.Value!, "CBasePlayerPawn", "m_pCameraServices");
